@@ -11,7 +11,7 @@ typedef struct {
 #define INIT_LENGTH 1<<2
 
 safestring_t *safe_create();
-void safe_resizeBuffer(safestring_t *, size_t);
+void safe_destroy(safestring_t *obj);
 
 #define safe_strchr(obj, chr) strchr(obj->data, chr)
 #define safe_strcmp(obj, str) strcmp(obj->data, str)

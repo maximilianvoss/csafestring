@@ -1,6 +1,8 @@
 #include "csafestring.h"
 #include <string.h>
 
+void safe_resizeBuffer(safestring_t *, size_t);
+
 safestring_t *safe_create() {
 	safestring_t *obj = (safestring_t *) malloc(sizeof(safestring_t));
 	obj->buffer_length = INIT_LENGTH;
