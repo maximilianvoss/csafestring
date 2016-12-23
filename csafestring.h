@@ -6,12 +6,12 @@
 typedef struct {
 	char *data;
 	size_t buffer_length;
-} safestring_t;
+} csafestring_t;
 
 #define INIT_LENGTH 1<<2
 
-safestring_t *safe_create();
-void safe_destroy(safestring_t *obj);
+csafestring_t *safe_create(char *);
+void safe_destroy(csafestring_t *);
 
 #define safe_strchr(obj, chr) strchr(obj->data, chr)
 #define safe_strcmp(obj, str) strcmp(obj->data, str)
@@ -25,16 +25,16 @@ void safe_destroy(safestring_t *obj);
 #define safe_strtok(obj, chr) strtok(obj->string, chr)
 #define safe_strerror(val) strerror(val)
 
-char *safe_strcat(safestring_t *, const char *);
-char *safe_strcpy(safestring_t *, const char *);
-char *safe_strncat(safestring_t *, const char *, size_t);
-char *safe_strncpy(safestring_t *, const char *, size_t);
-size_t safe_strxfrm(safestring_t *, safestring_t *, size_t);
-int safe_strncmp(safestring_t *, const char *, size_t);
-void *safe_memchr(safestring_t *, int, size_t);
-int safe_memcmp(safestring_t *, safestring_t *, size_t);
-void *safe_memcpy(safestring_t *, safestring_t *, size_t);
-void *safe_memmove(safestring_t *, safestring_t *, size_t);
-void *safe_memset(safestring_t *, int, size_t);
+char *safe_strcat(csafestring_t *, const char *);
+char *safe_strcpy(csafestring_t *, const char *);
+char *safe_strncat(csafestring_t *, const char *, size_t);
+char *safe_strncpy(csafestring_t *, const char *, size_t);
+size_t safe_strxfrm(csafestring_t *, csafestring_t *, size_t);
+int safe_strncmp(csafestring_t *, const char *, size_t);
+void *safe_memchr(csafestring_t *, int, size_t);
+int safe_memcmp(csafestring_t *, csafestring_t *, size_t);
+void *safe_memcpy(csafestring_t *, csafestring_t *, size_t);
+void *safe_memmove(csafestring_t *, csafestring_t *, size_t);
+void *safe_memset(csafestring_t *, int, size_t);
 
 #endif
