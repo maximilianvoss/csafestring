@@ -11,18 +11,19 @@ typedef struct {
 #define INIT_LENGTH 1<<2
 
 csafestring_t *safe_create(char *);
+csafestring_t *safe_clone(csafestring_t *);
 void safe_destroy(csafestring_t *);
 
 #define safe_strchr(obj, chr) strchr(obj->data, chr)
 #define safe_strcmp(obj, str) strcmp(obj->data, str)
-#define safe_strcoll(obj, str) strcoll(obj->string, str)
-#define safe_strcspn(obj, str) strcspn(obj->string, str)
-#define safe_strlen(obj) strlen(obj->string)
-#define safe_strpbrk(obj, str) strpbrk(obj->string, str)
-#define safe_strrchr(obj, chr) strrchr(obj->string, chr)
-#define safe_strspn(obj, str) strspn(obj->string, str)
-#define safe_strstr(obj, str) strstr(obj->string, str)
-#define safe_strtok(obj, chr) strtok(obj->string, chr)
+#define safe_strcoll(obj, str) strcoll(obj->data, str)
+#define safe_strcspn(obj, str) strcspn(obj->data, str)
+#define safe_strlen(obj) strlen(obj->data)
+#define safe_strpbrk(obj, str) strpbrk(obj->data, str)
+#define safe_strrchr(obj, chr) strrchr(obj->data, chr)
+#define safe_strspn(obj, str) strspn(obj->data, str)
+#define safe_strstr(obj, str) strstr(obj->data, str)
+#define safe_strtok(obj, chr) strtok(obj->data, chr)
 #define safe_strerror(val) strerror(val)
 
 char *safe_strcat(csafestring_t *, const char *);
