@@ -1,5 +1,4 @@
 #include "csafestring.h"
-#include <string.h>
 
 void safe_resizeBuffer(csafestring_t *, size_t);
 
