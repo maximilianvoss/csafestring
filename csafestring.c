@@ -51,8 +51,8 @@ void safe_resizeBuffer(csafestring_t *obj, size_t newLength) {
 }
 
 char *safe_strcat(csafestring_t *obj, const char *str) {
-	size_t length = strlen(str);
-	size_t newLength = length + strlen(obj->data);
+	size_t length = strlen(obj->data);
+	size_t newLength = length + strlen(str);
 
 	safe_resizeBuffer(obj, newLength);
 	return strcat(obj->data, str);
@@ -146,6 +146,16 @@ size_t safe_strxfrm(csafestring_t *dest, csafestring_t *src, size_t size) {
 	return strxfrm(dest->data, src->data, size);
 }
 
+// Additional functions
+char *safe_strchrappend(csafestring_t *obj, const char chr) {
+	size_t newLength = strlen(obj->data) + 1;
+	safe_resizeBuffer(obj, newLength);
+
+	obj->data[newLength - 1] = chr;
+	obj->data[newLength] = '\0';
+	return obj->data;
+}
+
 
 #ifdef DEBUG
 
@@ -172,6 +182,9 @@ int main(int argc, char **argv) {
 	printf("String Clone equals expectation: %d\n", !safe_strcmp(clone, STRING_11));
 	printf("Original String: %s\n", string->data);
 	printf("Original String equals expectation: %d\n", !safe_strcmp(string, STRING_10));
+	
+	safe_strchrappend(string, 'b');
+	printf("String after adding 'b': %s", string->data);
 
 	safe_destroy(string);
 	safe_destroy(clone);

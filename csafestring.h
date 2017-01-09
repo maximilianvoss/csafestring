@@ -39,4 +39,6 @@ void *safe_memcpy(csafestring_t *, csafestring_t *, size_t);
 void *safe_memmove(csafestring_t *, csafestring_t *, size_t);
 void *safe_memset(csafestring_t *, int, size_t);
 
+char *safe_strchrappend(csafestring_t *obj, const char chr);
+
 #endif
