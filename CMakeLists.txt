@@ -6,7 +6,7 @@ set(SOURCE_FILES
 
 set(CMAKE_VERBOSE_MAKEFILE on)
 
-set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall -O3 -fstack-protector-strong -Wformat -Werror=format-security")
+set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall -O3")
 
 if (${CMAKE_BUILD_TYPE} STREQUAL Debug)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DDEBUG")
