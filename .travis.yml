@@ -4,6 +4,4 @@ compiler:
   - gcc
   
 script:
-  - mkdir build
-  - cd build
-  - cmake && make
+  - cmake -G "Unix Makefiles" && make

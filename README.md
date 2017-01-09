@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/maximilianvoss/csafestring.svg?branch=master)](https://travis-ci.org/maximilianvoss/csafestring)
 #Library csafestring
 
 This is a small library to handle safely string operations in C. It is a wrapper around the standard string.h functionalities.
