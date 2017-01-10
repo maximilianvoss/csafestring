@@ -1,13 +1,13 @@
 #include <string.h>
-#include <printf.h>
+#include <stdio.h>
 #include "../csafestring.h"
 
 #define TESTCALL(TESTNAME, TESTMETHOD)\
     if ( argv[1] == NULL ) \
         TESTMETHOD();\
     else\
-		if (!strcmp(argv[1], TESTNAME))\
-			return TESTMETHOD();
+        if (!strcmp(argv[1], TESTNAME))\
+            return TESTMETHOD();
 
 #define ASSERTSTR(EXPECTED, ACTUAL)\
     printf("Expected: \t%s\nActual: \t%s\n\n", EXPECTED, ACTUAL);\
