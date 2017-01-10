@@ -3,6 +3,7 @@
 #include "../csafestring.h"
 
 #define TESTCALL(TESTNAME, TESTMETHOD)\
+    printf("\nTest case:\t%s\n", TESTNAME);\
     if ( argv[1] == NULL ) \
         TESTMETHOD();\
     else\
