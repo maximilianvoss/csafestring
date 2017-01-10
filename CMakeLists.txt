@@ -8,13 +8,12 @@ set(CMAKE_VERBOSE_MAKEFILE on)
 
 set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall -O3")
 
-if (${CMAKE_BUILD_TYPE} STREQUAL Debug)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DDEBUG")
-    add_executable(csafestring ${SOURCE_FILES})
-else (${CMAKE_BUILD_TYPE} STREQUAL Release)
-    add_library(csafestring ${SOURCE_FILES})
-    target_link_libraries(csafestring)
-    install(TARGETS csafestring DESTINATION /usr/local/lib)
-    install(FILES csafestring.h DESTINATION /usr/local/include)
-endif (${CMAKE_BUILD_TYPE} STREQUAL Debug)
+add_library(csafestring ${SOURCE_FILES})
+target_link_libraries(csafestring)
+install(TARGETS csafestring DESTINATION /usr/local/lib)
+install(FILES csafestring.h DESTINATION /usr/local/include)
+
+enable_testing()
+add_subdirectory(test)
+add_subdirectory(example)
 

@@ -155,38 +155,3 @@ char *safe_strchrappend(csafestring_t *obj, const char chr) {
 	obj->data[newLength] = '\0';
 	return obj->data;
 }
-
-
-#ifdef DEBUG
-
-#include <stdio.h>
-
-#define STRING "abcdefghijklmnopqrstuvwxyz 0123456789 "
-#define STRING_10 "abcdefghijklmnopqrstuvwxyz 0123456789 abcdefghijklmnopqrstuvwxyz 0123456789 abcdefghijklmnopqrstuvwxyz 0123456789 abcdefghijklmnopqrstuvwxyz 0123456789 abcdefghijklmnopqrstuvwxyz 0123456789 abcdefghijklmnopqrstuvwxyz 0123456789 abcdefghijklmnopqrstuvwxyz 0123456789 abcdefghijklmnopqrstuvwxyz 0123456789 abcdefghijklmnopqrstuvwxyz 0123456789 abcdefghijklmnopqrstuvwxyz 0123456789 "
-#define STRING_11 "abcdefghijklmnopqrstuvwxyz 0123456789 abcdefghijklmnopqrstuvwxyz 0123456789 abcdefghijklmnopqrstuvwxyz 0123456789 abcdefghijklmnopqrstuvwxyz 0123456789 abcdefghijklmnopqrstuvwxyz \
-0123456789 abcdefghijklmnopqrstuvwxyz 0123456789 abcdefghijklmnopqrstuvwxyz 0123456789 abcdefghijklmnopqrstuvwxyz 0123456789 abcdefghijklmnopqrstuvwxyz 0123456789 abcdefghijklmnopqrstuvwxyz 0123456789 abcdefghijklmnopqrstuvwxyz 0123456789 "
-
-int main(int argc, char **argv) {
-	int i;
-	csafestring_t *string = safe_create(STRING);
-	for ( i = 0; i < 9; i++ ) {
-		safe_strcat(string, STRING);
-	}
-
-	printf("String: %s\n", string->data);
-	printf("String equals expectation: %d\n", !safe_strcmp(string, STRING_10));
-
-	csafestring_t *clone = safe_clone(string);
-	safe_strcat(clone, STRING);
-	printf("String Clone: %s\n", clone->data);
-	printf("String Clone equals expectation: %d\n", !safe_strcmp(clone, STRING_11));
-	printf("Original String: %s\n", string->data);
-	printf("Original String equals expectation: %d\n", !safe_strcmp(string, STRING_10));
-	
-	safe_strchrappend(string, 'b');
-	printf("String after adding 'b': %s", string->data);
-
-	safe_destroy(string);
-	safe_destroy(clone);
-}
-#endif

@@ -13,4 +13,4 @@ before data is stored.
 __Auto Memory Increasement:__  
 While initializing the datastores size is set to INIT_LENGTH (default: 4 bytes).  
 If the new data does not fit, it will be increased always by the power of 2, until the new data fits into the array. This
-method is used that multiple string concatinations for example won't cause multiple reallocations.  
+TESTMETHOD is used that multiple string concatinations for example won't cause multiple reallocations.  
