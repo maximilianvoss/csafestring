@@ -1,4 +1,4 @@
-#include <printf.h>
+#include <stdio.h>
 #include "../csafestring.h"
 
 int main(int argc, char **argv) {
