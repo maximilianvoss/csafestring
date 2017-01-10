@@ -96,13 +96,20 @@ int test_strchrappend() {
 	return 0;
 }
 
+int test_emptyDestroy() {
+	csafestring_t *string = NULL;
+	safe_destroy(string);
+	return 0;
+}
+
 int main(int argc, char **argv) {
-	TESTCALL("createEmpty", test_createEmpty);
-	TESTCALL("createFull", test_createFull);
-	TESTCALL("concatination", test_concatination);
-	TESTCALL("copy", test_copy);
-	TESTCALL("clone", test_clone);
-	TESTCALL("strchrappend", test_strchrappend);
+	TESTCALL("test_createEmpty", test_createEmpty);
+	TESTCALL("test_createFull", test_createFull);
+	TESTCALL("test_concatination", test_concatination);
+	TESTCALL("test_copy", test_copy);
+	TESTCALL("test_clone", test_clone);
+	TESTCALL("test_strchrappend", test_strchrappend);
+	TESTCALL("test_emptyDestroy", test_emptyDestroy);
 
 	return -1;
 }

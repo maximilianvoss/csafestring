@@ -30,7 +30,12 @@ csafestring_t *safe_clone(csafestring_t *obj) {
 }
 
 void safe_destroy(csafestring_t *obj) {
-	free(obj->data);
+	if ( obj == NULL ) {
+		return;
+	}
+	if ( obj->data != NULL ) {
+		free(obj->data);
+	}
 	free(obj);
 }
 
