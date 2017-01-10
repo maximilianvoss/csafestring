@@ -1,15 +1,21 @@
 #include <string.h>
+#include <printf.h>
 #include "../csafestring.h"
 
 #define TESTCALL(TESTNAME, TESTMETHOD)\
-     if (!strcmp(argv[1], TESTNAME))\
-        return TESTMETHOD();
+    if ( argv[1] == NULL ) \
+        TESTMETHOD();\
+    else\
+		if (!strcmp(argv[1], TESTNAME))\
+			return TESTMETHOD();
 
 #define ASSERTSTR(EXPECTED, ACTUAL)\
+    printf("Expected: \t%s\nActual: \t%s\n\n", EXPECTED, ACTUAL);\
     if (strcmp(EXPECTED, ACTUAL))\
         return 1;
 
 #define ASSERTINT(EXPECTED, ACTUAL)\
+    printf("Expected: \t%d\nActual: \t%ld\n\n", EXPECTED, ACTUAL);\
     if (EXPECTED != ACTUAL)\
         return 1;
 
@@ -91,10 +97,6 @@ int test_strchrappend() {
 }
 
 int main(int argc, char **argv) {
-	if ( argc != 2 ) {
-		return -1;
-	}
-
 	TESTCALL("createEmpty", test_createEmpty);
 	TESTCALL("createFull", test_createFull);
 	TESTCALL("concatination", test_concatination);
