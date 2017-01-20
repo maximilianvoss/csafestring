@@ -130,13 +130,13 @@ int test_initialSizeOfAllocation() {
 }
 
 int main(int argc, char **argv) {
-//	TESTCALL("test_createEmpty", test_createEmpty);
-//	TESTCALL("test_createFull", test_createFull);
-//	TESTCALL("test_concatination", test_concatination);
-//	TESTCALL("test_copy", test_copy);
-//	TESTCALL("test_clone", test_clone);
-//	TESTCALL("test_strchrappend", test_strchrappend);
-//	TESTCALL("test_emptyDestroy", test_emptyDestroy);
+	TESTCALL("test_createEmpty", test_createEmpty);
+	TESTCALL("test_createFull", test_createFull);
+	TESTCALL("test_concatination", test_concatination);
+	TESTCALL("test_copy", test_copy);
+	TESTCALL("test_clone", test_clone);
+	TESTCALL("test_strchrappend", test_strchrappend);
+	TESTCALL("test_emptyDestroy", test_emptyDestroy);
 	TESTCALL("test_initialSizeOfAllocation", test_initialSizeOfAllocation);
 
 	return -1;

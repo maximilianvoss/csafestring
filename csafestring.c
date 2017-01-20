@@ -2,17 +2,13 @@
 static void safe_resizeBuffer(csafestring_t *, size_t);
 
 #ifdef EXPERIMENTAL_SIZING
-#include <stdio.h>
-
 static uint32_t sizing_count;
 static uint32_t sizing_size;
 
 int safe_getInitSize() {
 	if ( sizing_count == 0 || sizing_size == 0 ) {
-		printf("Size to allocate: %d (default size)\n", INIT_LENGTH);
 		return INIT_LENGTH;
 	} else {
-		printf("Size to allocate: %d\n", (int) sizing_size / sizing_count);
 		return (int) sizing_size / sizing_count;
 	}
 }
