@@ -30,7 +30,7 @@ abcdefghijklmnopqrstuvwxyz 0123456789 abcdefghijklmnopqrstuvwxyz 0123456789 abcd
 int test_createEmpty() {
 	csafestring_t *string = safe_create(NULL);
 
-	ASSERTINT(4, string->buffer_length);
+	ASSERTINT(INIT_LENGTH, string->buffer_length);
 
 	safe_destroy(string);
 	return 0;
