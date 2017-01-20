@@ -17,38 +17,36 @@ int safe_getInitSize() {
 csafestring_t *safe_create(char *str) {
 	csafestring_t *obj = (csafestring_t *) malloc(sizeof(csafestring_t));
 
-	if ( str == NULL ) {
 #ifdef EXPERIMENTAL_SIZING
-		obj->sizing_size = safe_getInitSize();
-		obj->buffer_length = 1<<obj->sizing_size;
-		sizing_size += obj->sizing_size;
+	obj->sizing_size = safe_getInitSize();
+	obj->buffer_length = 1<<obj->sizing_size;
+	sizing_size += obj->sizing_size;
 #else
-		obj->buffer_length = INIT_LENGTH_CALC;
+	obj->buffer_length = INIT_LENGTH_CALC;
 #endif
+		
+	if ( str == NULL ) {
 		obj->data = (char *) calloc(sizeof(char), obj->buffer_length);
 	} else {
 		size_t newLength = strlen(str) + 1;
-#ifdef EXPERIMENTAL_SIZING
-		obj->sizing_size = safe_getInitSize();
-		obj->buffer_length = 1<<obj->sizing_size;
-		sizing_size += obj->sizing_size;
-#else
-		obj->buffer_length = INIT_LENGTH_CALC;
-#endif
 
 		while ( obj->buffer_length < newLength ) {
 			obj->buffer_length <<= 1;
+			
 #ifdef EXPERIMENTAL_SIZING
 			obj->sizing_size++;
 			sizing_size++;
 #endif
+			
 		}
 		obj->data = (char *) malloc(obj->buffer_length);
 		strcpy(obj->data, str);
 	}
+	
 #ifdef EXPERIMENTAL_SIZING
 	sizing_count++;
 #endif
+	
 	return obj;
 }
 
@@ -56,12 +54,14 @@ csafestring_t *safe_clone(csafestring_t *obj) {
 	csafestring_t *clone = (csafestring_t *) malloc(sizeof(csafestring_t));
 	clone->buffer_length = obj->buffer_length;
 	clone->data = malloc(clone->buffer_length);
+	memcpy(clone->data, obj->data, clone->buffer_length);
+
 #ifdef EXPERIMENTAL_SIZING
 	clone->sizing_size = obj->sizing_size;
 	sizing_size += clone->sizing_size;
 	sizing_count++;
 #endif
-	memcpy(clone->data, obj->data, clone->buffer_length);
+	
 	return clone;
 }
 
@@ -70,14 +70,15 @@ void safe_destroy(csafestring_t *obj) {
 		return;
 	}
 
+	if ( obj->data != NULL ) {
+		free(obj->data);
+	}
+
 #ifdef EXPERIMENTAL_SIZING
 	sizing_size -= obj->sizing_size;
 	sizing_count--;
 #endif
-
-	if ( obj->data != NULL ) {
-		free(obj->data);
-	}
+	
 	free(obj);
 }
 
