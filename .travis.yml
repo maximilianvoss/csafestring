@@ -5,3 +5,4 @@ compiler:
   
 script:
   - cmake -G "Unix Makefiles" && make && make test
+  - cmake -DCMAKE_C_FLAGS="-DEXPERIMENTAL_SIZING" -G "Unix Makefiles" && make && make test
