@@ -30,7 +30,7 @@ abcdefghijklmnopqrstuvwxyz 0123456789 abcdefghijklmnopqrstuvwxyz 0123456789 abcd
 int test_createEmpty() {
 	csafestring_t *string = safe_create(NULL);
 
-	ASSERTINT(4, string->buffer_length);
+	ASSERTINT(INIT_LENGTH_CALC, string->buffer_length);
 
 	safe_destroy(string);
 	return 0;
@@ -103,6 +103,52 @@ int test_emptyDestroy() {
 	return 0;
 }
 
+
+int test_initialSizeOfAllocation() {
+#if EXPERIMENTAL_SIZING
+	int i;
+	
+	csafestring_t **string = (csafestring_t **) malloc(sizeof(csafestring_t *) * 30);
+	
+	for ( i = 0; i < 10; i++ ) {
+		string[i] = safe_create(STRING);
+	}
+	ASSERTINT(6, (long) string[0]->sizing_size);
+
+	for ( i = 0; i < 10; i++ ) {
+		safe_strcat(string[i], STRING);
+	}
+	ASSERTINT(7, (long) string[0]->sizing_size);
+	
+	for ( i = 10; i < 20; i++ ) {
+		string[i] = safe_create(STRING_11);
+	}
+
+	for ( i = 20; i < 30; i++ ) {
+		string[i] = safe_create(STRING);
+	}
+	
+	for ( i = 0; i < 10; i ++ ) {
+		ASSERTINT(7, (long) string[i]->sizing_size);
+	}
+	
+	for ( i = 10; i < 20; i ++ ) {
+		ASSERTINT(9, (long) string[i]->sizing_size);
+	}
+	
+	for ( i = 20; i < 30; i ++ ) {
+		ASSERTINT(8, (long) string[i]->sizing_size);
+	}
+
+	for ( i = 0; i < 30; i++ ) {
+		safe_destroy(string[i]);
+	}
+	
+	free(string);
+#endif
+	return 0;
+}
+
 int main(int argc, char **argv) {
 	TESTCALL("test_createEmpty", test_createEmpty);
 	TESTCALL("test_createFull", test_createFull);
@@ -111,6 +157,7 @@ int main(int argc, char **argv) {
 	TESTCALL("test_clone", test_clone);
 	TESTCALL("test_strchrappend", test_strchrappend);
 	TESTCALL("test_emptyDestroy", test_emptyDestroy);
+	TESTCALL("test_initialSizeOfAllocation", test_initialSizeOfAllocation);
 
 	return -1;
 }
