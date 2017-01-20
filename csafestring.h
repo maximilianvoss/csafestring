@@ -13,7 +13,8 @@ typedef struct {
 #endif
 } csafestring_t;
 
-#define INIT_LENGTH 1<<3
+#define INIT_LENGTH 3
+#define INIT_LENGTH_CALC (1<<INIT_LENGTH)
 
 csafestring_t *safe_create(char *);
 csafestring_t *safe_clone(csafestring_t *);

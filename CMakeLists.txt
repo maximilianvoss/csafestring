@@ -6,7 +6,7 @@ set(SOURCE_FILES
 
 #set(CMAKE_VERBOSE_MAKEFILE on)
 
-set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall -O3 -DEXPERIMENTAL_SIZING")
+set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall -O0 -g -DEXPERIMENTAL_SIZING")
 
 add_library(csafestring ${SOURCE_FILES})
 target_link_libraries(csafestring)

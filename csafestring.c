@@ -1,22 +1,19 @@
 #include "csafestring.h"
-void safe_resizeBuffer(csafestring_t *, size_t);
-
-#ifdef EXPERIMENTAL_SIZING
-int safe_getInitSize();
-
-static uint32_t sizing_size = 0;
-static uint32_t sizing_count = 0;
-#endif
+static void safe_resizeBuffer(csafestring_t *, size_t);
 
 #ifdef EXPERIMENTAL_SIZING
 #include <stdio.h>
+
+static uint32_t sizing_count;
+static uint32_t sizing_size;
+
 int safe_getInitSize() {
 	if ( sizing_count == 0 || sizing_size == 0 ) {
-		printf("Size to allocate: %d\n", INIT_LENGTH);
+		printf("Size to allocate: %d (default size)\n", INIT_LENGTH);
 		return INIT_LENGTH;
 	} else {
-		printf("Size to allocate: %d\n", (int) sizing_count / sizing_size);
-		return (int) sizing_count / sizing_size;
+		printf("Size to allocate: %d\n", (int) sizing_size / sizing_count);
+		return (int) sizing_size / sizing_count;
 	}
 }
 #endif
@@ -26,26 +23,31 @@ csafestring_t *safe_create(char *str) {
 
 	if ( str == NULL ) {
 #ifdef EXPERIMENTAL_SIZING
-		obj->buffer_length = safe_getInitSize();
-		obj->sizing_size = obj->buffer_length;
+		obj->sizing_size = safe_getInitSize();
+		obj->buffer_length = 1<<obj->sizing_size;
+		sizing_size += obj->sizing_size;
 #else
-		obj->buffer_length = INIT_LENGTH;
+		obj->buffer_length = INIT_LENGTH_CALC;
 #endif
 		obj->data = (char *) calloc(sizeof(char), obj->buffer_length);
 	} else {
 		size_t newLength = strlen(str) + 1;
 #ifdef EXPERIMENTAL_SIZING
-		obj->buffer_length = safe_getInitSize();
-		obj->sizing_size = obj->buffer_length;
+		obj->sizing_size = safe_getInitSize();
+		obj->buffer_length = 1<<obj->sizing_size;
+		sizing_size += obj->sizing_size;
 #else
-		obj->buffer_length = INIT_LENGTH;
+		obj->buffer_length = INIT_LENGTH_CALC;
 #endif
 
 		while ( obj->buffer_length < newLength ) {
 			obj->buffer_length <<= 1;
+#ifdef EXPERIMENTAL_SIZING
 			obj->sizing_size++;
+			sizing_size++;
+#endif
 		}
-		obj->data = (char *) malloc(newLength);
+		obj->data = (char *) malloc(obj->buffer_length);
 		strcpy(obj->data, str);
 	}
 #ifdef EXPERIMENTAL_SIZING
@@ -83,7 +85,7 @@ void safe_destroy(csafestring_t *obj) {
 	free(obj);
 }
 
-void safe_resizeBuffer(csafestring_t *obj, size_t newLength) {
+static void safe_resizeBuffer(csafestring_t *obj, size_t newLength) {
 	char hit = 0;
 	newLength++;
 
