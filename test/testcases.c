@@ -110,11 +110,13 @@ int test_initialSizeOfAllocation() {
 	for ( i = 0; i < 10; i++ ) {
 		string[i] = safe_create(STRING);
 	}
+	ASSERTINT(6, (long) string[0]->sizing_size);
 
 	for ( i = 0; i < 10; i++ ) {
 		safe_strcat(string[i], STRING);
 	}
-
+	ASSERTINT(7, (long) string[0]->sizing_size);
+	
 	for ( i = 10; i < 20; i++ ) {
 		string[i] = safe_create(STRING_11);
 	}
@@ -123,9 +125,22 @@ int test_initialSizeOfAllocation() {
 		string[i] = safe_create(STRING);
 	}
 	
+	for ( i = 0; i < 10; i ++ ) {
+		ASSERTINT(7, (long) string[i]->sizing_size);
+	}
+	
+	for ( i = 10; i < 20; i ++ ) {
+		ASSERTINT(9, (long) string[i]->sizing_size);
+	}
+	
+	for ( i = 20; i < 30; i ++ ) {
+		ASSERTINT(8, (long) string[i]->sizing_size);
+	}
+
 	for ( i = 0; i < 30; i++ ) {
 		safe_destroy(string[i]);
 	}
+	
 	return 0;
 }
 

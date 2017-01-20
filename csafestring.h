@@ -3,13 +3,12 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <stdint.h>
 
 typedef struct {
 	char *data;
 	size_t buffer_length;
 #ifdef EXPERIMENTAL_SIZING
-	uint32_t sizing_size;
+	unsigned int sizing_size;
 #endif
 } csafestring_t;
 

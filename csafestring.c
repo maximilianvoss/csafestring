@@ -2,8 +2,8 @@
 static void safe_resizeBuffer(csafestring_t *, size_t);
 
 #ifdef EXPERIMENTAL_SIZING
-static uint32_t sizing_count;
-static uint32_t sizing_size;
+static unsigned int sizing_count;
+static unsigned int sizing_size;
 
 int safe_getInitSize() {
 	if ( sizing_count == 0 || sizing_size == 0 ) {
