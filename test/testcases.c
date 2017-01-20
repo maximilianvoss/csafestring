@@ -103,7 +103,9 @@ int test_emptyDestroy() {
 	return 0;
 }
 
+
 int test_initialSizeOfAllocation() {
+#if EXPERIMENTAL_SIZING
 	int i;
 	
 	csafestring_t **string = (csafestring_t **) malloc(sizeof(csafestring_t *) * 30);
@@ -143,7 +145,7 @@ int test_initialSizeOfAllocation() {
 	}
 	
 	free(string);
-	
+#endif
 	return 0;
 }
 
