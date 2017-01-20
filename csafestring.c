@@ -15,7 +15,7 @@ int safe_getInitSize() {
 		printf("Size to allocate: %d\n", INIT_LENGTH);
 		return INIT_LENGTH;
 	} else {
-		printf("Size to allocate: %d\n", (int) sizing_count / sizing_size;);
+		printf("Size to allocate: %d\n", (int) sizing_count / sizing_size);
 		return (int) sizing_count / sizing_size;
 	}
 }
