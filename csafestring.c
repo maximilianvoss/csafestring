@@ -2,22 +2,37 @@
 
 void safe_resizeBuffer(csafestring_t *, size_t);
 
+#ifdef EXPERIMENTAL_SIZING
+static uint32_t sizing_size = 0;
+static uint32_t sizing_count = 0;
+#endif
+
 csafestring_t *safe_create(char *str) {
 	csafestring_t *obj = (csafestring_t *) malloc(sizeof(csafestring_t));
 
 	if ( str == NULL ) {
 		obj->buffer_length = INIT_LENGTH;
 		obj->data = (char *) calloc(sizeof(char), INIT_LENGTH);
+#ifdef EXPERIMENTAL_SIZING
+		obj->sizing_size = INIT_LENGTH;
+#endif
 	} else {
 		size_t newLength = strlen(str) + 1;
 		obj->buffer_length = INIT_LENGTH;
+#ifdef EXPERIMENTAL_SIZING
+		obj->sizing_size = INIT_LENGTH;
+#endif
 
 		while ( obj->buffer_length < newLength ) {
 			obj->buffer_length <<= 1;
+			obj->sizing_size++;
 		}
 		obj->data = (char *) malloc(newLength);
 		strcpy(obj->data, str);
 	}
+#ifdef EXPERIMENTAL_SIZING
+	sizing_count++;
+#endif
 	return obj;
 }
 
@@ -25,6 +40,11 @@ csafestring_t *safe_clone(csafestring_t *obj) {
 	csafestring_t *clone = (csafestring_t *) malloc(sizeof(csafestring_t));
 	clone->buffer_length = obj->buffer_length;
 	clone->data = malloc(clone->buffer_length);
+#ifdef EXPERIMENTAL_SIZING
+	clone->sizing_size = obj->sizing_size;
+	sizing_size += clone->sizing_size;
+	sizing_count++;
+#endif
 	memcpy(clone->data, obj->data, clone->buffer_length);
 	return clone;
 }
@@ -33,6 +53,12 @@ void safe_destroy(csafestring_t *obj) {
 	if ( obj == NULL ) {
 		return;
 	}
+
+#ifdef EXPERIMENTAL_SIZING
+	sizing_size -= obj->sizing_size;
+	sizing_count--;
+#endif
+			
 	if ( obj->data != NULL ) {
 		free(obj->data);
 	}
@@ -46,6 +72,10 @@ void safe_resizeBuffer(csafestring_t *obj, size_t newLength) {
 	while ( obj->buffer_length < newLength ) {
 		hit = 1;
 		obj->buffer_length <<= 1;
+#ifdef EXPERIMENTAL_SIZING
+		obj->sizing_size++;
+		sizing_size++;
+#endif
 	}
 	if ( hit ) {
 		char *tmp = (char *) calloc(sizeof(char), obj->buffer_length);
