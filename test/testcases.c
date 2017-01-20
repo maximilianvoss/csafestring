@@ -105,7 +105,7 @@ int test_emptyDestroy() {
 
 int test_initialSizeOfAllocation() {
 	int i;
-	csafestring_t *string[20];
+	csafestring_t *string[30];
 	
 	for ( i = 0; i < 10; i++ ) {
 		string[i] = safe_create(STRING);
@@ -118,8 +118,12 @@ int test_initialSizeOfAllocation() {
 	for ( i = 10; i < 20; i++ ) {
 		string[i] = safe_create(STRING_11);
 	}
+
+	for ( i = 20; i < 30; i++ ) {
+		string[i] = safe_create(STRING);
+	}
 	
-	for ( i = 0; i < 20; i++ ) {
+	for ( i = 0; i < 30; i++ ) {
 		safe_destroy(string[i]);
 	}
 	return 0;
