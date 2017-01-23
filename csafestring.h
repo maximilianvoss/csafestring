@@ -14,6 +14,7 @@ typedef struct {
 csafestring_t *safe_create(char *);
 csafestring_t *safe_clone(csafestring_t *);
 void safe_destroy(csafestring_t *);
+void safe_resizeBuffer(csafestring_t *obj, size_t newLength);
 
 #define safe_strchr(obj, chr) strchr(obj->data, chr)
 #define safe_strcmp(obj, str) strcmp(obj->data, str)
@@ -34,9 +35,9 @@ char *safe_strncpy(csafestring_t *, const char *, size_t);
 size_t safe_strxfrm(csafestring_t *, csafestring_t *, size_t);
 int safe_strncmp(csafestring_t *, const char *, size_t);
 void *safe_memchr(csafestring_t *, int, size_t);
-int safe_memcmp(csafestring_t *, csafestring_t *, size_t);
-void *safe_memcpy(csafestring_t *, csafestring_t *, size_t);
-void *safe_memmove(csafestring_t *, csafestring_t *, size_t);
+int safe_memcmp(csafestring_t *, void *, size_t);
+void *safe_memcpy(csafestring_t *, void *, size_t);
+void *safe_memmove(csafestring_t *, void *, size_t);
 void *safe_memset(csafestring_t *, int, size_t);
 
 char *safe_strchrappend(csafestring_t *obj, const char chr);

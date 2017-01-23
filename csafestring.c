@@ -24,7 +24,7 @@ csafestring_t *safe_create(char *str) {
 csafestring_t *safe_clone(csafestring_t *obj) {
 	csafestring_t *clone = (csafestring_t *) malloc(sizeof(csafestring_t));
 	clone->buffer_length = obj->buffer_length;
-	clone->data = malloc(clone->buffer_length);
+	clone->data = malloc(clone->buffer_lenqgth);
 	memcpy(clone->data, obj->data, clone->buffer_length);
 	return clone;
 }
@@ -92,35 +92,22 @@ void *safe_memchr(csafestring_t *obj, int chr, size_t size) {
 }
 
 
-int safe_memcmp(csafestring_t *obj1, csafestring_t *obj2, size_t size) {
+int safe_memcmp(csafestring_t *obj1, void *obj2, size_t size) {
 	size_t length = size;
 	if ( obj1->buffer_length < length ) {
 		length = obj1->buffer_length;
 	}
-	if ( obj2->buffer_length < length ) {
-		length = obj2->buffer_length;
-	}
-	return memcmp(obj1->data, obj2->data, length);
+	return memcmp(obj1->data, obj2, length);
 }
 
-void *safe_memcpy(csafestring_t *dest, csafestring_t *src, size_t size) {
-	size_t length = size;
-	if ( src->buffer_length < size ) {
-		length = src->buffer_length;
-	}
-
-	safe_resizeBuffer(dest, length);
-	return memcpy(dest->data, src->data, length);
+void *safe_memcpy(csafestring_t *dest, void *src, size_t size) {
+	safe_resizeBuffer(dest, size);
+	return memcpy(dest->data, src, size);
 }
 
-void *safe_memmove(csafestring_t *dest, csafestring_t *src, size_t size) {
-	size_t length = size;
-	if ( src->buffer_length < size ) {
-		length = src->buffer_length;
-	}
-
-	safe_resizeBuffer(dest, length);
-	return memmove(dest->data, src->data, length);
+void *safe_memmove(csafestring_t *dest, void *src, size_t size) {
+	safe_resizeBuffer(dest, size);
+	return memmove(dest->data, src, size);
 }
 
 void *safe_memset(csafestring_t *obj, int chr, size_t size) {
