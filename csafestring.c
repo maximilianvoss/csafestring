@@ -1,5 +1,4 @@
 #include "csafestring.h"
-static void safe_resizeBuffer(csafestring_t *, size_t);
 
 #ifdef EXPERIMENTAL_SIZING
 static unsigned int sizing_count;
@@ -53,7 +52,7 @@ csafestring_t *safe_create(char *str) {
 csafestring_t *safe_clone(csafestring_t *obj) {
 	csafestring_t *clone = (csafestring_t *) malloc(sizeof(csafestring_t));
 	clone->buffer_length = obj->buffer_length;
-	clone->data = malloc(clone->buffer_lenqgth);
+	clone->data = malloc(clone->buffer_length);
 	memcpy(clone->data, obj->data, clone->buffer_length);
 
 #ifdef EXPERIMENTAL_SIZING
@@ -82,7 +81,7 @@ void safe_destroy(csafestring_t *obj) {
 	free(obj);
 }
 
-static void safe_resizeBuffer(csafestring_t *obj, size_t newLength) {
+void safe_resizeBuffer(csafestring_t *obj, size_t newLength) {
 	char hit = 0;
 	newLength++;
 
