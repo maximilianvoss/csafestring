@@ -7,9 +7,13 @@
 typedef struct {
 	char *data;
 	size_t buffer_length;
+#ifdef EXPERIMENTAL_SIZING
+	unsigned int sizing_size;
+#endif
 } csafestring_t;
 
-#define INIT_LENGTH 1<<2
+#define INIT_LENGTH 3
+#define INIT_LENGTH_CALC (1<<INIT_LENGTH)
 
 csafestring_t *safe_create(char *);
 csafestring_t *safe_clone(csafestring_t *);

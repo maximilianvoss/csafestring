@@ -4,7 +4,7 @@ project(csafestring)
 set(SOURCE_FILES
         csafestring.c csafestring.h)
 
-set(CMAKE_VERBOSE_MAKEFILE on)
+#set(CMAKE_VERBOSE_MAKEFILE on)
 
 set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall -O3")
 
