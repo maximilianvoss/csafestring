@@ -3,6 +3,6 @@ cmake_minimum_required(VERSION 2.8)
 set(SOURCE_FILES
         example.c)
 
-add_executable(${CMAKE_PROJECT_NAME}_example ${SOURCE_FILES})
-target_link_libraries(${CMAKE_PROJECT_NAME}_example csafestring)
+add_executable(csafestring_example ${SOURCE_FILES})
+target_link_libraries(csafestring_example csafestring)
 
