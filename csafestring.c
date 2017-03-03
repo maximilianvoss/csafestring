@@ -101,7 +101,7 @@ void safe_resizeBuffer(csafestring_t *obj, size_t newLength) {
 	}
 }
 
-csafestring_t *safe_emptyBuffer(csafestring_t *obj) {
+void safe_emptyBuffer(csafestring_t *obj) {
 	memset(obj->data, '\0', obj->buffer_length);
 }
 
