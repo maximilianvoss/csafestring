@@ -19,6 +19,7 @@ csafestring_t *safe_create(char *);
 csafestring_t *safe_clone(csafestring_t *);
 void safe_destroy(csafestring_t *);
 void safe_resizeBuffer(csafestring_t *obj, size_t newLength);
+csafestring_t *safe_emptyBuffer(csafestring_t *);
 
 #define safe_strchr(obj, chr) strchr(obj->data, chr)
 #define safe_strcmp(obj, str) strcmp(obj->data, str)
@@ -45,5 +46,6 @@ void *safe_memmove(csafestring_t *, void *, size_t);
 void *safe_memset(csafestring_t *, int, size_t);
 
 char *safe_strchrappend(csafestring_t *obj, const char chr);
+csafestring_t *safe_emptyBuffer(csafestring_t *);
 
 #endif
