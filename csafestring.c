@@ -106,6 +106,10 @@ void safe_emptyBuffer(csafestring_t *obj) {
 }
 
 char *safe_strcat(csafestring_t *obj, const char *str) {
+    if (str == NULL) {
+        return obj->data;
+    }
+
 	size_t length = strlen(obj->data);
 	size_t newLength = length + strlen(str);
 
@@ -114,7 +118,6 @@ char *safe_strcat(csafestring_t *obj, const char *str) {
 }
 
 int safe_strncmp(csafestring_t *obj, const char *str, size_t size) {
-
 	size_t length = size;
 	if ( str == NULL ) {
 		return 1;
@@ -166,12 +169,18 @@ void *safe_memset(csafestring_t *obj, int chr, size_t size) {
 }
 
 char *safe_strcpy(csafestring_t *obj, const char *str) {
+    if (str == NULL) {
+        return 0;
+    }
 	size_t length = strlen(str);
 	safe_resizeBuffer(obj, length);
 	return strcpy(obj->data, str);
 }
 
 char *safe_strncat(csafestring_t *obj, const char *str, size_t size) {
+    if (str == NULL) {
+        return 0;
+    }
 	size_t newLength = size + strlen(obj->data);
 
 	safe_resizeBuffer(obj, newLength);
@@ -179,6 +188,9 @@ char *safe_strncat(csafestring_t *obj, const char *str, size_t size) {
 }
 
 char *safe_strncpy(csafestring_t *obj, const char *str, size_t size) {
+    if (str == NULL) {
+        return 0;
+    }
 	safe_resizeBuffer(obj, size);
 	return strncpy(obj->data, str, size);
 }
